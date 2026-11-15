@@ -1,4 +1,17 @@
-dna="ATGCGATCGATC"
+import requests
+
+url = "https://raw.githubusercontent.com/ELAA-BEN-SLIMEN/DNA-Sequence-Analyzer/main/sample.fasta"
+
+response = requests.get(url)
+response.raise_for_status()
+
+lines = response.text.splitlines()
+
+dna = "".join(
+    line.strip()
+    for line in lines
+    if line.strip() and not line.startswith(">")
+)
 print("DNA sequence:",dna)
 print("sequence length:",len(dna))
 g=dna.count("G")
