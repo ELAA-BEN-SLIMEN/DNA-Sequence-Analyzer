@@ -174,6 +174,24 @@ def analyze_multiple_sequences(sequences):
     return pd.DataFrame(results)
 
 
+def plot_gc_comparison(df):
+    import matplotlib.pyplot as plt
+
+    plt.figure(figsize=(8, 5))
+
+    plt.bar(df["Sequence"], df["GC (%)"])
+
+    plt.title("GC Content Comparison")
+    plt.xlabel("DNA Sequences")
+    plt.ylabel("GC Content (%)")
+
+    plt.ylim(0, 100)
+    plt.grid(axis="y", alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig("gc_comparison.png", dpi=300)
+    plt.close()
+
 if __name__ == "__main__":
     url = (
         "https://raw.githubusercontent.com/"
@@ -192,5 +210,7 @@ if __name__ == "__main__":
     print(df.to_string(index=False))
 
     df.to_csv("dna_analysis_results.csv", index=False)
+    plot_gc_comparison(df)
+    
 
-            
+
