@@ -112,4 +112,33 @@ def main():
 if __name__ == "__main__":
     main()
 
+def read_fasta_sequences(text):
+    sequences = {}
+    name = None
+
+    for line in text.splitlines():
+        line = line.strip()
+
+        if not line:
+            continue
+
+        if line.startswith(">"):
+            name = line[1:].strip()
+
+            if not name:
+                raise ValueError("Missing sequence name")
+
+            if name in sequences:
+                raise ValueError("Duplicate sequence name")
+
+            sequences[name] = ""
+
+        else:
+            if name is None:
+                raise ValueError("Missing FASTA header")
+
+            sequences[name] += line.upper()
+
+    return sequences
+
             
