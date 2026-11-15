@@ -12,6 +12,24 @@ dna = "".join(
     for line in lines
     if line.strip() and not line.startswith(">")
 )
+
+def validate_dna(sequence):
+    valid_nucleotides = "ATGC"
+
+    if len(sequence) == 0:
+        return False
+
+    for nucleotide in sequence:
+        if nucleotide not in valid_nucleotides:
+            return False
+
+    return True
+
+
+if not validate_dna(dna):
+    raise ValueError("Invalid DNA sequence!")
+
+print("DNA validation successful!")
 print("DNA sequence:",dna)
 print("sequence length:",len(dna))
 g=dna.count("G")
