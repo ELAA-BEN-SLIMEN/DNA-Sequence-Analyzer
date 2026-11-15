@@ -140,5 +140,57 @@ def read_fasta_sequences(text):
             sequences[name] += line.upper()
 
     return sequences
+    
+import pandas as pd
+
+def analyze_multiple_sequences(sequences):
+    results = []
+
+    for name, dna in sequences.items():
+        if not validate_dna(dna):
+            raise ValueError(
+                f"Invalid DNA sequence: {name}"
+            )
+
+        length = len(dna)
+
+        a = dna.count("A")
+        t = dna.count("T")
+        g = dna.count("G")
+        c = dna.count("C")
+
+        gc = (g + c) / length * 100
+
+        results.append({
+            "Sequence": name,
+            "Length": length,
+            "A": a,
+            "T": t,
+            "G": g,
+            "C": c,
+            "GC (%)": round(gc, 2)
+        })
+
+    return pd.DataFrame(results)
+
+
+if __name__ == "__main__":
+    url = (
+        "https://raw.githubusercontent.com/"
+        "ELAA-BEN-SLIMEN/DNA-Sequence-Analyzer/"
+        "main/multiple_sequences.fasta"
+    )
+
+    response = requests.get(url, timeout=15)
+    response.raise_for_status()
+
+    sequences = read_fasta_sequences(response.text)
+
+    df = analyze_multiple_sequences(sequences)
+
+    print("\nMultiple DNA Sequence Analysis:")
+    print(df.to_string(index=False))
+
+    df.to_csv("dna_analysis_results.csv", index=False)
 
             
