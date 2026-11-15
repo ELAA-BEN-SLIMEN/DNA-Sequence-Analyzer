@@ -1,0 +1,4 @@
+Sequence,Length,A,T,G,C,GC (%)
+DNA_sample_1,12,3,3,3,3,50.0
+DNA_sample_2,12,3,4,3,2,41.67
+DNA_sample_3,12,3,2,4,3,58.33
